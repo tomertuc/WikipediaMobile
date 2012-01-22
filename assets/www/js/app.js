@@ -33,9 +33,12 @@ app = {
 		origUrl = origUrl || url;
 		console.log('hideAndLoad url ' + url);
 		console.log('hideAndLoad origUrl ' + origUrl);
-		// We're going to turn on the webview's cache before we navigate and turn it off afterwards
-		// This helps the back button work even when there is no network connection
-		setCaching(true);
+		if(!hasNetworkConnection()) {
+			// We're going to turn on the webview's cache before we navigate and turn it off afterwards
+			// This helps the back button work even when there is no network connection
+			// We do this only if we're offline, so we actually have content that isn't stale all the time
+			setCaching(true);
+		}
 		app.network.makeRequest({
 			url: url, 
 			success: function(data) {
@@ -57,7 +60,7 @@ app = {
 				$('#languageCmd').attr('disabled', 'true');
 			}
 		});
-		// Affects script execution otherwise
+		// Affects script execution otherwise in mysterious ways
 		setCaching(false);
 	},
 	loadLocalPage: function(page) {
