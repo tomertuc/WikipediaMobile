@@ -245,6 +245,9 @@ window.chrome = function() {
 
 	// Hack to make sure that things in focus actually look like things in focus
 	function doFocusHack() {
+		$("#searchParam").bind('focus', function() {
+			console.log("Focus on the searchbar");
+		});
 		var scrollEnd = false;
 		var applicableClasses = [
 			'.deleteButton',
