@@ -136,9 +136,10 @@ window.chrome = function() {
 
 			$(".closeButton").bind('click', showContent);
 
+			doFocusHack();
+
 			initContentLinkHandlers();
 			chrome.loadFirstPage();
-			doFocusHack();
 		});
 
 	}
