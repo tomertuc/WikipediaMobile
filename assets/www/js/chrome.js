@@ -118,6 +118,7 @@ window.chrome = function() {
 				window.search.performSearch($("#searchParam").val(), false);
 				return false;
 			}).bind('keypress', function(event) {
+				console.log("Key press happening!");
 				if(event.keyCode == 13)
 				{
 					$("#searchParam").blur();
@@ -276,6 +277,7 @@ window.chrome = function() {
 		function onTouchStart() {
 			$('body').bind('touchend', onTouchEnd);
 			$('body').bind('touchmove', onTouchMove);
+			console.log("Touch started on " + $(this).attr('id'));
 			scrollEnd = false;
 		}			
 
