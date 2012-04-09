@@ -250,6 +250,7 @@ window.chrome = function() {
 			'.deleteButton',
 			'.listItem',
 			'#search',
+			'#searchParam',
 			'.closeButton',
 			'.cleanButton',
 			'.titlebarIcon'
