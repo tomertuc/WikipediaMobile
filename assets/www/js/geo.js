@@ -44,7 +44,10 @@ window.geo = function() {
 		geo.map.setView(new L.LatLng(args.lat, args.lon), 18);
 
 		var findAndDisplayNearby = function( lat, lon ) {
-			geoLookup( lat, lon, preferencesDB.get("language"), function( data ) {
+			var bounds = geo.map.getBounds();
+			var radius = bounds.getNorthWest().distanceTo(bounds.getSouthEast());
+			console.log("Radius is " + radius);
+			geoLookup( lat, lon, radius, function( data ) {
 				geoAddMarkers( data );
 			}, function(err) {
 				console.log(JSON.stringify(err));
@@ -97,32 +100,30 @@ window.geo = function() {
 		} );
 	}
 
-	function geoLookup(latitude, longitude, lang, success, error) {
-		var requestUrl = "http://ws.geonames.net/findNearbyWikipediaJSON?formatted=true&";
-		requestUrl += "lat=" + latitude + "&";
-		requestUrl += "lng=" + longitude + "&";
-		requestUrl += "username=wikimedia&";
-		requestUrl += "lang=" + lang;
-		$.ajax({
-			url: requestUrl,
-			success: function(data) {
-				success(data);
-			},
-			error: error
+	function geoLookup(latitude, longitude, radius, success, error) {
+		app.makeAPIRequest({
+			action: "query",
+			list: "geosearch",
+			gscoord:  latitude + "|" + longitude,
+			gsradius: radius
+		}).done(function(data) {
+			success(data.query.geosearch);
+		}).fail(function(err) {
+			error(err);
 		});
 	}
 
 	function geoAddMarkers( data ) {
-		$.each(data.geonames, function(i, item) {
+		$.each(data, function(i, item) {
 			var summary, html,
-				url = item.wikipediaUrl.replace(/^([a-z0-9-]+)\.wikipedia\.org/, window.PROTOCOL + '://$1.m.wikipedia.org');
+				url = app.urlForTitle(item.title);
 			if($.inArray(url, shownURLs) === -1) {
-				var marker = new L.Marker(new L.LatLng(item.lat, item.lng));
+				var marker = new L.Marker(new L.LatLng(item.lat, item.lon));
 				summary = item.summary || '';
 
 				html = "<div><strong>" + item.title + "</strong><p>" + summary + "</p></div>";
 				var popupContent = $(html).click(function() {
-					app.navigateToPage(url, {hideCurrent: true});
+					app.navigateTo(item.title, 'en');
 				})[0];
 				marker.bindPopup(popupContent, {closeButton: false});
 				geo.map.addLayer(marker);

@@ -234,7 +234,8 @@ window.app = function() {
 		params.format = 'json';
 		lang = lang || preferencesDB.get('language');
 		method = method || "GET";
-		var url = app.baseUrlForLanguage(lang) + '/w/api.php';
+		//var url = app.baseUrlForLanguage(lang) + '/w/api.php';
+		var url = 'http://mobile-geo.wmflabs.org/w/api.php';
 		if(method === 'POST') {
 			return $.post(url, params);
 		} else {
