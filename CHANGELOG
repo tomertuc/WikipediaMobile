@@ -245,3 +245,9 @@
 ### iOS ###
 
 - Fix issues with iOS6 (Saved pages, iPhone 5 support)
+
+## Android v1.3 ##
+
+### Android ###
+
+- Patch cordova.js to fix Saved Pages (again)
