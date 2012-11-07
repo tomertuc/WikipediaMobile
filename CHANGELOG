@@ -250,4 +250,29 @@
 
 ### Android ###
 
-- Patch cordova.js to fix Saved Pages (again)
+- Fix saved pages on upgrade from v1.2+
+
+## Android v1.3.1 ##
+
+### Android ###
+
+- Fix for not being able to type full characters in some phones
+- Fix for not being able to type japanese characters in phones
+
+## Android v1.3.2 ##
+
+### Android ###
+
+- Fix for connection issues with Android 2.2
+
+## Android v1.4beta1 ##
+
+### Common ###
+
+- Updated to sexier new typography
+- Autohide the search bar when not in use
+- Add a theming engine to support multiple themes
+- Add a dark theme (based off Solarized)
+- Add support for site specific mobile styles
+- Better touch zoom in the map
+- Fixes for Right To Left languages
